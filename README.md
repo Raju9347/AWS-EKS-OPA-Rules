@@ -3,24 +3,24 @@ aws eks open policy agent.
 
 
 ## Create EKS cluster
-eksctl create cluster --name my-eks --node-type t2.large --nodes 1 --nodes-min 1 --nodes-max 2 --region eu-west-1 --zones=eu-west-1a,eu-west-1b,eu-west-1c
+eksctl create cluster --name my-eks --node-type t2.large --nodes 1 --nodes-min 1 --nodes-max 2 --region us-east-1
 
-eksctl create cluster --name my-eks --region eu-west-1
+eksctl create cluster --name my-eks --region us-east-1
 
 ## Create node groups
-eksctl create nodegroup --region eu-west-1 --cluster my-eks --name ng-windows --node-type t2.large --nodes 3 --nodes-min 1 --nodes-max 4 --managed=false --node-ami-family WindowsServer2019FullContainer
+eksctl create nodegroup --region us-east-1 --cluster my-eks --name ng-windows --node-type t2.large --nodes 3 --nodes-min 1 --nodes-max 4 --managed=false --node-ami-family WindowsServer2019FullContainer
 
 ## Get EKS Cluster service
-eksctl get cluster --name my-eks --region eu-west-1
+eksctl get cluster --name my-eks --region us-east-1
 
 ## Update Kubeconfig 
-aws eks update-kubeconfig --name my-eks --region eu-west-1
+aws eks update-kubeconfig --name my-eks --region us-east-1
 
 ## Get EKS Pod data.
 kubectl get pods --all-namespaces
 
 ## Delete EKS cluster
-eksctl delete cluster --name my-eks --region eu-west-1
+eksctl delete cluster --name my-eks --region us-east-1
 
 ###############################################################################################################################
 ######################################### OPA GATEKEEPER SETUP IN EKS #########################################################
