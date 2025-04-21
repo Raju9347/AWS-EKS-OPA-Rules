@@ -1,0 +1,29 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8sapprovedrepos
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sApprovedRepos
+      validation:
+        # Schema for the parameters in the Constraint
+        openAPIV3Schema:
+          properties:
+            approvedRepo:
+              type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8sapprovedrepos
+
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_].image
+          not image_allowed(container)
+          msg := sprintf("Image '%s' is not from the approved repository", [container])
+        }
+
+        image_allowed(image) {
+          startswith(image, input.parameters.approvedRepo)
+        }
