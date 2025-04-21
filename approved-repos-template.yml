@@ -19,11 +19,18 @@ spec:
         package k8sapprovedrepos
 
         violation[{"msg": msg}] {
+          # Ensure the resource being reviewed is a Pod
+          input.review.kind.kind == "Pod"
+
+          # Check all container images in the Pod
           container := input.review.object.spec.containers[_].image
           not image_allowed(container)
+
+          # Generate violation message
           msg := sprintf("Image '%s' is not from the approved repository", [container])
         }
 
+        # Helper function to check if the image is from the approved repository
         image_allowed(image) {
           startswith(image, input.parameters.approvedRepo)
         }
