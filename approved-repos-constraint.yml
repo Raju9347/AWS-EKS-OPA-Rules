@@ -1,0 +1,8 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sApprovedRepos
+metadata:
+  name: approved-repo
+spec:
+  enforcementAction: deny
+  parameters:
+    approvedRepo: "https://gallery.ecr.aws/"
