@@ -1,0 +1,12 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sNoImageLatest
+metadata:
+  name: disallow-latest-tag
+spec:
+  match:
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+    namespaces: ["default"]   # or remove to apply cluster-wide
+  parameters:
+    allowedRegex: ".*:[0-9]+(\\.[0-9]+)*$"
